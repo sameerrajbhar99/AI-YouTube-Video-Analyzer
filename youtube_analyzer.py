@@ -1,18 +1,12 @@
 from textwrap import dedent
 import os
 import streamlit as st
-from dotenv import load_dotenv
 from agno.agent import Agent
 from agno.models.groq import Groq
 from agno.tools.youtube import YouTubeTools
 
-load_dotenv()
-
-try:
-    if "GROQ_API_KEY" in st.secrets:
-        os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
-except Exception:
-    pass
+# Set the Groq API key from Streamlit secrets directly
+os.environ["GROQ_API_KEY"] = st.secrets["API_KEY_GROQ"]
 
 def build_youtube_agent():
     return Agent(
