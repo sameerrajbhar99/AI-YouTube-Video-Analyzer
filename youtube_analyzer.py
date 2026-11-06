@@ -1,10 +1,18 @@
 from textwrap import dedent
+import os
+import streamlit as st
 from dotenv import load_dotenv
 from agno.agent import Agent
 from agno.models.groq import Groq
 from agno.tools.youtube import YouTubeTools
 
 load_dotenv()
+
+try:
+    if "GROQ_API_KEY" in st.secrets:
+        os.environ["GROQ_API_KEY"] = st.secrets["GROQ_API_KEY"]
+except Exception:
+    pass
 
 def build_youtube_agent():
     return Agent(
@@ -51,9 +59,3 @@ def build_youtube_agent():
         add_datetime_to_context=True,
         markdown=True,
     )
-
-# youtube_agent.print_response(
-#     "Analyze this video: https://youtu.be/ePtcuI7KRoE?si=bVL54N4KEdxSaZGI",
-#     stream=True,
-# )
-
